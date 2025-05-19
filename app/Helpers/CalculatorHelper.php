@@ -17,6 +17,6 @@ class CalculatorHelper
     }
 
     public static function perkalian($a, $b){
-        return $a * $b; // ada typo harusnya *
+        return $a * $b; 
     }
 }

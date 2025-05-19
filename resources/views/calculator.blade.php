@@ -22,6 +22,10 @@
         <button type="submit">Hitung</button>
     </form>
 
+    @if (isset($error))
+        <div style="color: red;">{{ $error }}</div>
+    @endif
+
     @if (isset($result))
         <h2>Hasil: {{ $result }}</h2>
     @endif

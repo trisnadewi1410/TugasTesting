@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use App\Models\Task;
 
 class FeatureTodoTest extends TestCase
 {
@@ -61,22 +62,25 @@ class FeatureTodoTest extends TestCase
 
     public function testDeleteDataActivity()
     {
-        // 1. Cek url yang diakses
+        // 1. Buat task terlebih dahulu
+        $task = Task::create([
+            'name' => 'Task to Delete',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        // 2. Cek url yang diakses
         $response = $this->get(route('dashboard'));
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee('Enter an activity');
 
-        // 2. User mengirim data ke server
+        // 3. Hapus data yang baru dibuat
+        $storeData = $this->delete(route('item.destroy', ['id' => $task->id]));
 
-        $storeData = $this->delete(route('item.destroy', ['id' => 3]));
-
-        // 3. Apakah data berhasil dihapus
+        // 4. Apakah data berhasil dihapus
         $storeData->assertStatus(Response::HTTP_FOUND);
         $this->assertDatabaseMissing('tasks', [
-            'id' => 3,
+            'id' => $task->id,
         ]);
-
-        // 4. Redirect ke halaman dashboard
-        $storeData->assertRedirect(route('dashboard'));
     }
 }

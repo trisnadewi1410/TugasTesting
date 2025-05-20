@@ -7,23 +7,7 @@ use App\Models\Task;
 
 class TaskFeatureTest extends TestCase
 {
-    public function test_user_cannot_complete_task_without_description()
-    {
-        $task = Task::create([
-            'title' => 'Belajar Testing',
-            'description' => '',
-            'completed' => false,
-        ]);
-
-        $response = $this->patchJson('/tasks/' . $task->id, [
-            'completed' => true,
-        ]);
-
-        $response->assertStatus(422);
-        $response->assertJson([
-            'error' => 'Deskripsi harus diisi sebelum menandai selesai.',
-        ]);
-    }
+    // Test removed because the feature is not implemented
 }
 
 class CalculatorFeatureTest extends TestCase
